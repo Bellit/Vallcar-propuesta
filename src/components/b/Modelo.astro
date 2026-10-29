@@ -1,0 +1,16 @@
+---
+import { foto, nombreTipo, type Caravana } from "../../data/vallcar";
+import { u } from "../../lib/u";
+
+interface Props { c: Caravana }
+const { c } = Astro.props;
+---
+<article class="modelo" data-tipo={c.tipo} data-plazas={c.plazas}>
+  <img loading="lazy" src={foto(c.img, 600, 600)} alt={`${c.marca} ${c.modelo}`} width="600" height="600">
+  <h3><a href={u(`/b/stock/${c.slug}/`)}>{c.modelo}</a></h3>
+  <div class="meta">{c.distribucion}. {c.plazas} plazas, {c.longitud}</div>
+  <div class="pie-modelo">
+    <span class={`estado-u ${c.tipo}`}>{nombreTipo[c.tipo]}</span>
+    <span class="mas" aria-hidden="true">Ver y pedir precio</span>
+  </div>
+</article>

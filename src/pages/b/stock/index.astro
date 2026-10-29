@@ -1,0 +1,46 @@
+---
+import LayoutB from "../../../layouts/LayoutB.astro";
+import Modelo from "../../../components/b/Modelo.astro";
+import Visita from "../../../components/b/Visita.astro";
+import { disponibles } from "../../../data/vallcar";
+import { u } from "../../../lib/u";
+---
+<LayoutB titulo="Caravanas en exposición" descripcion="Caravanas Sterckeman nuevas y de ocasión y remolques Comanche en exposición en Canovelles.">
+  <div class="portada">
+    <div class="wrap">
+      <div class="miga"><a href={u("/b/")}>Inicio</a> / Comprar</div>
+      <h1>Caravanas en exposición</h1>
+      <p class="lead">Todas están en Canovelles para que entres en ellas. Si no ves la tuya, pregúntanos: llegan unidades nuevas cada mes.</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="filtros">
+        <div class="grupo" role="group" aria-label="Personas">
+          <span class="et">Personas</span>
+          <button class="chip" data-filtro="plazas" data-valor="0">Todas</button>
+          <button class="chip" data-filtro="plazas" data-valor="4">Hasta 4</button>
+          <button class="chip" data-filtro="plazas" data-valor="6">5 o más</button>
+        </div>
+        <div class="grupo" role="group" aria-label="Tipo">
+          <span class="et">Tipo</span>
+          <button class="chip" data-filtro="tipo" data-valor="todas">Todo</button>
+          <button class="chip" data-filtro="tipo" data-valor="nueva">Nuevas</button>
+          <button class="chip" data-filtro="tipo" data-valor="ocasion">Ocasión</button>
+          <button class="chip" data-filtro="tipo" data-valor="remolque">Remolques</button>
+        </div>
+        <span class="contador" aria-live="polite"><b data-contador>{disponibles.length}</b> en exposición</span>
+      </div>
+      <div class="modelos" data-stock>
+        {disponibles.map((c) => <Modelo c={c} />)}
+        <div class="vacio" data-vacio hidden>
+          <p>Ahora mismo no tenemos ninguna así. Cuéntanos qué buscas y te avisamos cuando llegue.</p>
+          <a class="btn btn-pino" href={u("/b/contacto/")}>Avisadme</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Visita />
+</LayoutB>

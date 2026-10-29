@@ -1,0 +1,97 @@
+---
+import "../styles/b.css";
+import { contacto, paginas } from "../data/vallcar";
+import { u } from "../lib/u";
+
+interface Props {
+  titulo: string;
+  descripcion?: string;
+}
+const { titulo, descripcion = "Caravanas Sterckeman para familias y parejas en Canovelles (Barcelona). Venta, alquiler, taller, parking y tienda." } = Astro.props;
+const ruta = Astro.url.pathname;
+
+const menu = [
+  { href: u("/b/stock/"), texto: "Comprar" },
+  { href: u("/b/alquiler/"), texto: "Alquilar" },
+  { href: u("/b/taller/"), texto: "Taller" },
+  { href: u("/b/parking/"), texto: "Parking" },
+  { href: u("/b/tienda/"), texto: "Tienda" },
+  { href: u("/b/contacto/"), texto: "Visítanos" },
+];
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{titulo} | Vallcar</title>
+  <meta name="description" content={descripcion}>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="cab">
+    <div class="wrap">
+      <a href={u("/b/")} class="logo" aria-label="Vallcar, inicio">
+        <svg viewBox="0 0 46 30" aria-hidden="true"><rect x="2" y="2" width="36" height="20" rx="8" fill="#FFD23F" stroke="#263238" stroke-width="2.5"/><rect x="8" y="8" width="9" height="6" rx="1.5" fill="#263238"/><rect x="22" y="8" width="10" height="10" rx="1.5" fill="#263238"/><circle cx="15" cy="25" r="3.5" fill="#263238"/><path d="M38 18h6" stroke="#263238" stroke-width="2.5" stroke-linecap="round"/></svg>
+        Vallcar
+      </a>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <ul>
+          {menu.map((m) => <li><a href={m.href} aria-current={ruta.startsWith(m.href) ? "page" : undefined}>{m.texto}</a></li>)}
+        </ul>
+      </nav>
+      <div class="cab-der">
+        <span class="estado" data-horario><span data-horario-texto>Horario de tienda</span></span>
+        <a class="tel" href={contacto.telefonoHref}>{contacto.telefono}</a>
+        <button class="btn btn-linea menu-btn" type="button" aria-expanded="false" aria-controls="nav" data-menu-boton>Menú</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <slot />
+  </main>
+
+  <footer class="pie">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <h2>Vallcar</h2>
+          <p>{contacto.direccion}<br>{contacto.cp}</p>
+          <p><a href={contacto.telefonoHref}>{contacto.telefono}</a><br><a href={`mailto:${contacto.email}`}>{contacto.email}</a></p>
+        </div>
+        <div>
+          <h2>Qué hacemos</h2>
+          <ul>
+            <li><a href={u("/b/stock/")}>Venta de caravanas</a></li>
+            <li><a href={u("/b/alquiler/")}>Alquiler</a></li>
+            {paginas.filter((p) => p.slug !== "quienes-somos").map((p) => <li><a href={u(`/b/${p.slug}/`)}>{p.menu}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h2>Vallcar</h2>
+          <ul>
+            <li><a href={u("/b/quienes-somos/")}>Quiénes somos</a></li>
+            <li><a href={u("/b/contacto/")}>Contacto</a></li>
+            {contacto.redes.map((r) => <li><a href={r.url} rel="noopener">{r.nombre}</a></li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="legal">
+        <span>Vallcar, S.A. Desde 1985</span>
+        <span><a href="#">Aviso legal</a> &nbsp; <a href="#">Privacidad</a> &nbsp; <a href="#">Cookies</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="nota-propuesta" href={u("/")}>Propuesta B · volver a las propuestas</a>
+
+  <script>
+    import "../scripts/comun.ts";
+  </script>
+</body>
+</html>

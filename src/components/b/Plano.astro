@@ -1,0 +1,27 @@
+---
+// Plano de planta orientativo. Las camas se encienden según las plazas.
+interface Props { plazas: number }
+const { plazas } = Astro.props;
+const on = (n: number) => (plazas >= n ? "on" : "");
+---
+<div class="plano" data-plano>
+  <svg viewBox="0 0 640 300" role="img" aria-labelledby="planoTit">
+    <title id="planoTit">Plano de planta de una caravana con las camas para {plazas} personas marcadas</title>
+    <path d="M8 150 L70 128 L70 172 Z" fill="none" stroke="#9DB3BE" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="70" y="30" width="560" height="240" rx="46" fill="#fff" stroke="#263238" stroke-width="3"/>
+    <rect class="cama on" data-cama="2" x="88" y="50" width="150" height="200" rx="26"/>
+    <text x="163" y="155" text-anchor="middle" class="on">Cama doble</text>
+    <rect class="zona" x="252" y="50" width="120" height="96" rx="10"/>
+    <text x="312" y="103" text-anchor="middle">Cocina</text>
+    <rect class="zona" x="252" y="160" width="120" height="90" rx="10"/>
+    <text x="312" y="210" text-anchor="middle">Aseo</text>
+    <rect class={`cama ${on(4)}`} data-cama="4" x="386" y="50" width="130" height="200" rx="18"/>
+    <text x="451" y="148" text-anchor="middle" class={on(4)} data-texto="4">Comedor</text>
+    <text x="451" y="168" text-anchor="middle" class={on(4)} data-texto="4">convertible</text>
+    <rect class={`cama ${on(6)}`} data-cama="6" x="530" y="50" width="80" height="94" rx="16"/>
+    <rect class={`cama ${on(6)}`} data-cama="6" x="530" y="156" width="80" height="94" rx="16"/>
+    <text x="570" y="103" text-anchor="middle" class={on(6)} data-texto="6">Literas</text>
+    <circle cx="250" cy="282" r="16" fill="#263238"/>
+  </svg>
+  <div class="leyenda"><span><i></i>Camas que usaríais</span><span>Plano orientativo. Cada modelo tiene su distribución.</span></div>
+</div>

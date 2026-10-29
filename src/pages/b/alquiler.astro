@@ -1,0 +1,50 @@
+---
+import LayoutB from "../../layouts/LayoutB.astro";
+import Formulario from "../../components/Formulario.astro";
+import Visita from "../../components/b/Visita.astro";
+import { alquiler, foto } from "../../data/vallcar";
+import { u } from "../../lib/u";
+---
+<LayoutB titulo="Alquiler de caravanas Sterckeman en Barcelona" descripcion="Alquila una caravana Sterckeman nueva en Canovelles, con todo incluido. Modelos de 4 y 6 plazas.">
+  <div class="portada">
+    <div class="wrap">
+      <div class="miga"><a href={u("/b/")}>Inicio</a> / Alquilar</div>
+      <h1>Prueba el caravaning con una caravana nueva</h1>
+      <p class="lead">Caravanas Sterckeman nuevas y con todo incluido. Para un verano, un puente o para decidir antes de comprar.</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="intro"><h2>Elige según cuántos sois</h2><p>Sujetos a disponibilidad en tus fechas.</p></div>
+      <div class="alq-grid">
+        {alquiler.map((m) => (
+          <article class="alq">
+            <img src={foto(m.img, 640, 480)} alt={`Sterckeman ${m.modelo}`} loading="lazy" width="640" height="480">
+            <span class="personas">{m.plazas} personas</span>
+            <h3>{m.modelo}</h3>
+            <p>{m.camas}.</p>
+            <ul>{m.extras.map((e) => <li>{e}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-cielo">
+    <div class="wrap dos">
+      <div>
+        <h2>Cómo funciona</h2>
+        <ol class="pasos">
+          <li><span><b>Pide fechas y modelo.</b> Te contesta una persona del equipo, normalmente el mismo día.</span></li>
+          <li><span><b>Recógela en Canovelles.</b> Te explicamos cómo funciona todo y revisamos el enganche contigo.</span></li>
+          <li><span><b>Si os convence, cómprala.</b> Te asesoramos con la financiación y el seguro.</span></li>
+        </ol>
+        <p style="margin-top:24px">No se paga nada hasta que confirmamos la reserva.</p>
+      </div>
+      <Formulario titulo="Solicitar alquiler" asunto="Solicitud de alquiler" tipo="alquiler" boton="Enviar solicitud" />
+    </div>
+  </section>
+
+  <Visita />
+</LayoutB>

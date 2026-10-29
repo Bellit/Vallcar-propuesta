@@ -1,0 +1,44 @@
+---
+import LayoutB from "../../layouts/LayoutB.astro";
+import Formulario from "../../components/Formulario.astro";
+import Visita from "../../components/b/Visita.astro";
+import { foto, paginas, type Pagina } from "../../data/vallcar";
+import { u } from "../../lib/u";
+
+export function getStaticPaths() {
+  return paginas.map((p) => ({ params: { pagina: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Pagina };
+---
+<LayoutB titulo={p.titulo} descripcion={p.entradilla}>
+  <div class="portada">
+    <div class="wrap">
+      <div class="miga"><a href={u("/b/")}>Inicio</a> / {p.menu}</div>
+      <h1>{p.titulo}</h1>
+      <p class="lead">{p.entradilla}</p>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap dos dos-centro">
+      <div>
+        {p.texto.map((t) => <p>{t}</p>)}
+        <ul class="lista" style="margin-top:12px">{p.puntos.map((x) => <li>{x}</li>)}</ul>
+        {p.lugar && <p class="aviso"><strong>Dónde está: {p.lugar.nombre}.</strong> {p.lugar.detalle}</p>}
+      </div>
+      <img class="foto-r" src={foto(p.img, 900, 675)} alt="" loading="lazy" width="900" height="675">
+    </div>
+  </section>
+
+  <section class="sec sec-cielo">
+    <div class="wrap dos">
+      <div>
+        <h2>{p.asunto}</h2>
+        <p style="margin-top:20px">Te respondemos en horario de tienda. Si lo prefieres, llámanos al 938 464 298{p.slug === "parking" ? " o al 640 542 128" : ""}.</p>
+      </div>
+      <Formulario titulo="Tus datos" asunto={p.asunto} />
+    </div>
+  </section>
+
+  {p.slug !== "parking" && <Visita />}
+</LayoutB>

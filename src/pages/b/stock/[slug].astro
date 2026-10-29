@@ -1,0 +1,72 @@
+---
+import LayoutB from "../../../layouts/LayoutB.astro";
+import Modelo from "../../../components/b/Modelo.astro";
+import Plano from "../../../components/b/Plano.astro";
+import Formulario from "../../../components/Formulario.astro";
+import { disponibles, foto, nombreTipo, type Caravana } from "../../../data/vallcar";
+import { u } from "../../../lib/u";
+
+export function getStaticPaths() {
+  return disponibles.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+const { c } = Astro.props as { c: Caravana };
+const parecidas = disponibles.filter((x) => x.slug !== c.slug && x.plazas === c.plazas).slice(0, 3);
+---
+<LayoutB titulo={`${c.marca} ${c.modelo}`} descripcion={`${c.marca} ${c.modelo}, ${c.plazas} plazas, ${c.longitud}. ${c.descripcion}`}>
+  <section class="sec">
+    <div class="wrap">
+      <div class="miga"><a href={u("/b/")}>Inicio</a> / <a href={u("/b/stock/")}>Comprar</a> / {c.modelo}</div>
+      <div class="detalle">
+        <img class="grande" src={foto(c.img, 1200, 900)} alt={`${c.marca} ${c.modelo} en la exposición de Vallcar`} width="1200" height="900">
+        <div>
+          <span class={`estado-u ${c.tipo}`}>{nombreTipo[c.tipo]}</span>
+          <h1>{c.modelo}</h1>
+          <p class="serie">{c.marca}. {c.serie}</p>
+          <ul class="datos">
+            <li><b>{c.plazas}</b><span>personas</span></li>
+            <li><b>{c.longitud}</b><span>de largo</span></li>
+            <li><b>Canovelles</b><span>en exposición</span></li>
+          </ul>
+          <p>{c.descripcion}</p>
+          <p class="aviso">Precio y ficha técnica completa, bajo consulta. Te ayudamos con la financiación y el seguro en la misma visita.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {c.tipo !== "remolque" && (
+    <section class="sec sec-cielo">
+      <div class="wrap dos dos-centro">
+        <div>
+          <h2>Así dormiríais</h2>
+          <p style="margin-top:20px">{c.distribucion}. Ven a verla y comprueba las medidas de cada cama.</p>
+        </div>
+        <Plano plazas={c.plazas} />
+      </div>
+    </section>
+  )}
+
+  <section class="sec">
+    <div class="wrap dos">
+      <div>
+        <h2>Pide precio sin compromiso</h2>
+        <p style="margin-top:20px">Te llamamos con el precio, la disponibilidad y las opciones de financiación. Si prefieres, ven directamente a verla.</p>
+        <ul class="lista">
+          <li>Te la enseñamos por dentro</li>
+          <li>Entrega revisada en nuestro taller</li>
+          <li>Financiación y seguro gestionados por Vallcar</li>
+        </ul>
+      </div>
+      <Formulario titulo="Pedir precio" asunto="Pedir precio" tipo="precio" modelo={`${c.modelo} (${c.serie})`} boton="Pedir precio" />
+    </div>
+  </section>
+
+  {parecidas.length > 0 && (
+    <section class="sec sec-cielo">
+      <div class="wrap">
+        <div class="intro"><h2>Otras para {c.plazas} personas</h2><a class="btn btn-linea" href={u("/b/stock/")}>Ver todas</a></div>
+        <div class="modelos">{parecidas.map((x) => <Modelo c={x} />)}</div>
+      </div>
+    </section>
+  )}
+</LayoutB>

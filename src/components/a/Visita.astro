@@ -1,0 +1,25 @@
+---
+import { contacto, horario } from "../../data/vallcar";
+---
+<section class="sec" id="visita">
+  <div class="wrap visita">
+    <div class="hito" role="img" aria-label="Carretera C-1415b, kilómetro 10.2, Canovelles">
+      <span class="via">C-1415b</span>
+      <span class="km">10.2</span>
+      <small>Canovelles</small>
+    </div>
+    <div>
+      <h2>Ven a vernos</h2>
+      <p style="margin-top:16px">{contacto.direccion}<br>{contacto.cp}. {contacto.referencia}.</p>
+      <table class="horario">
+        <caption class="saltar">Horario</caption>
+        {horario.map((h) => <tr><td>{h.dias}</td><td>{h.horas}</td></tr>)}
+      </table>
+      <div class="acciones">
+        <a class="btn btn-am" href={contacto.telefonoHref}>Llamar al {contacto.telefono}</a>
+        <a class="btn btn-borde" href={contacto.maps} rel="noopener">Abrir en Google Maps</a>
+      </div>
+    </div>
+    <iframe class="mapa" title="Mapa de Vallcar en Canovelles" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Vallcar%20Canovelles&z=14&output=embed"></iframe>
+  </div>
+</section>

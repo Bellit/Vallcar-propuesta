@@ -1,0 +1,22 @@
+---
+import { foto, nombreTipo, type Caravana } from "../../data/vallcar";
+import { u } from "../../lib/u";
+
+interface Props { c: Caravana }
+const { c } = Astro.props;
+---
+<article class="ficha" data-tipo={c.tipo} data-plazas={c.plazas}>
+  <div class="foto">
+    <img loading="lazy" src={foto(c.img, 640, 480)} alt={`${c.marca} ${c.modelo}`} width="640" height="480">
+    <span class={`etq ${c.tipo}`}>{nombreTipo[c.tipo]}</span>
+  </div>
+  <div class="cuerpo">
+    <h3><a href={u(`/a/stock/${c.slug}/`)}>{c.modelo}</a></h3>
+    <div class="serie">{c.serie}</div>
+    <ul class="datos">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V6M3 14h18v4M7 14v-3h12a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="6" cy="11" r="1.6" fill="currentColor"/></svg>{c.plazas} plazas</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M6 9l-3 3 3 3M18 9l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>{c.longitud}</li>
+    </ul>
+    <span class="ver" aria-hidden="true">Ver ficha y pedir precio</span>
+  </div>
+</article>

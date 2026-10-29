@@ -1,0 +1,48 @@
+---
+import LayoutA from "../../../layouts/LayoutA.astro";
+import Ficha from "../../../components/a/Ficha.astro";
+import Visita from "../../../components/a/Visita.astro";
+import { disponibles } from "../../../data/vallcar";
+import { u } from "../../../lib/u";
+---
+<LayoutA titulo="Caravanas en stock" descripcion="Caravanas Sterckeman nuevas y de ocasión y remolques Comanche disponibles en Vallcar, Canovelles.">
+  <div class="portada">
+    <div class="wrap">
+      <div class="miga"><a href={u("/a/")}>Inicio</a> / Stock</div>
+      <h1>Caravanas en stock</h1>
+      <p class="lead">Todas están en nuestra exposición de Canovelles. Las vendidas desaparecen de la lista automáticamente.</p>
+    </div>
+  </div>
+
+  <div class="buscador">
+    <div class="wrap">
+      <div class="grupo" role="group" aria-label="Tipo">
+        <button class="chip" data-filtro="tipo" data-valor="todas">Todo</button>
+        <button class="chip" data-filtro="tipo" data-valor="nueva">Nuevas</button>
+        <button class="chip" data-filtro="tipo" data-valor="ocasion">Ocasión</button>
+        <button class="chip" data-filtro="tipo" data-valor="remolque">Remolques</button>
+      </div>
+      <div class="grupo" role="group" aria-label="Plazas">
+        <span class="et">Plazas</span>
+        <button class="chip" data-filtro="plazas" data-valor="0">Todas</button>
+        <button class="chip" data-filtro="plazas" data-valor="4">Hasta 4</button>
+        <button class="chip" data-filtro="plazas" data-valor="6">5 o más</button>
+      </div>
+      <span class="contador" aria-live="polite"><b data-contador>{disponibles.length}</b> disponibles</span>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="grid-stock" data-stock>
+        {disponibles.map((c) => <Ficha c={c} />)}
+        <div class="vacio" data-vacio hidden>
+          <p>Ahora mismo no tenemos ninguna con estos filtros. Llegan unidades nuevas cada mes: dinos qué buscas y te avisamos.</p>
+          <a class="btn btn-am" href={u("/a/contacto/")}>Avisadme cuando llegue</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Visita />
+</LayoutA>

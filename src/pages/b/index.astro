@@ -1,0 +1,119 @@
+---
+import LayoutB from "../../layouts/LayoutB.astro";
+import Plano from "../../components/b/Plano.astro";
+import Modelo from "../../components/b/Modelo.astro";
+import Visita from "../../components/b/Visita.astro";
+import { disponibles } from "../../data/vallcar";
+import { u } from "../../lib/u";
+
+const inicial = 4;
+const encajan = disponibles.filter((c) => c.plazas >= inicial).length;
+---
+<LayoutB titulo="Caravanas Sterckeman para familias en Barcelona">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>¿Cuántos vais a dormir dentro?</h1>
+        <p class="lead">Empieza por ahí. Te enseñamos cómo se reparten las camas en una Sterckeman y qué modelos tenemos ahora mismo en Canovelles.</p>
+        <div class="selector" role="group" aria-label="Número de personas">
+          <button type="button" data-personas="2" aria-pressed="false">2 personas<small>Pareja</small></button>
+          <button type="button" data-personas="4" aria-pressed="true">4 personas<small>Familia</small></button>
+          <button type="button" data-personas="6" aria-pressed="false">6 personas<small>Con literas</small></button>
+        </div>
+        <p class="resultado" aria-live="polite"><b data-n>{encajan} modelos</b> en exposición para <span data-p>{inicial}</span> personas. <a href="#modelos">Verlos</a></p>
+      </div>
+      <Plano plazas={inicial} />
+    </div>
+  </div>
+
+  <section class="sec" id="modelos">
+    <div class="wrap">
+      <div class="intro">
+        <h2>Modelos para <span data-p>{inicial}</span> personas</h2>
+        <a class="btn btn-linea" href={u("/b/stock/")}>Ver todo el stock</a>
+      </div>
+      <div class="modelos" data-lista>
+        {disponibles.map((c) => <Modelo c={c} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-pino">
+    <div class="wrap">
+      <h2 style="max-width:18ch">Y cuando ya la tienes, seguimos aquí</h2>
+      <div class="trio">
+        <div class="camino">
+          <h3>Taller</h3>
+          <p>Revisión anual para evitar humedades y problemas de frenos. También gestionamos la ITV.</p>
+          <ul><li>Caravanas, autocaravanas y remolques</li><li>Todas las marcas</li></ul>
+          <a class="btn btn-blanco" href={u("/b/taller/")}>Pedir cita</a>
+        </div>
+        <div class="camino">
+          <h3>Parking</h3>
+          <p>Cubierto o descubierto, con acceso 24 horas en Lliçà d'Amunt, al lado de la AP-7.</p>
+          <ul><li>Cerca de Granollers, Mollet y Parets</li><li>Información: 640 542 128</li></ul>
+          <a class="btn btn-blanco" href={u("/b/parking/")}>Consultar plazas</a>
+        </div>
+        <div class="camino">
+          <h3>Tienda</h3>
+          <p>Miles de accesorios y recambios originales y compatibles. Enviamos a toda España en 24/48 h.</p>
+          <ul><li>Mobiliario de camping</li><li>Recambios para todas las marcas</li></ul>
+          <a class="btn btn-blanco" href={u("/b/tienda/")}>Ver la tienda</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap dos">
+      <div>
+        <h2>Prueba el caravaning con una Sterckeman nueva</h2>
+        <p style="margin-top:20px">Somos de los pocos en España que alquilan caravanas nuevas. Todo incluido, para que solo tengáis que enganchar y salir.</p>
+        <ol class="pasos">
+          <li><span><b>Pide fechas y modelo.</b> Te contesta una persona del equipo, no un sistema automático.</span></li>
+          <li><span><b>Recógela en Canovelles.</b> Te explicamos cómo funciona todo antes de salir.</span></li>
+          <li><span><b>Si os convence, cómprala.</b> Te asesoramos con la financiación y el seguro.</span></li>
+        </ol>
+      </div>
+      <div class="form">
+        <h3 class="form-titulo">Modelos de alquiler</h3>
+        <ul class="lista">
+          <li>Easy 380CE y 390CP, para 4 personas</li>
+          <li>Easy 470PE y 496PE Kid's, para 6 con literas</li>
+        </ul>
+        <a class="btn btn-sol" style="width:100%" href={u("/b/alquiler/")}>Ver modelos y pedir fechas</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-cielo">
+    <div class="wrap confianza">
+      <div><div class="dato">Desde 1985</div><p>De los pioneros del caravaning en España.</p></div>
+      <div><div class="dato">Agentes Sterckeman</div><p>Importadores para todo el país, con red de distribuidores.</p></div>
+      <div><div class="dato">Remolques Comanche</div><p>Distribuidores oficiales de remolques tienda y de carga.</p></div>
+    </div>
+  </section>
+
+  <Visita />
+</LayoutB>
+
+<script>
+  const botones = document.querySelectorAll<HTMLButtonElement>("[data-personas]");
+  const elegir = (p: number) => {
+    botones.forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.personas) === p)));
+    document.querySelectorAll<SVGElement>("[data-cama]").forEach((c) => c.classList.toggle("on", Number(c.dataset.cama) <= p));
+    document.querySelectorAll<SVGElement>("[data-texto]").forEach((t) => t.classList.toggle("on", Number(t.dataset.texto) <= p));
+    // Una caravana sirve si tiene al menos tantas plazas como personas.
+    let n = 0;
+    document.querySelectorAll<HTMLElement>("[data-lista] [data-plazas]").forEach((m) => {
+      const ok = Number(m.dataset.plazas) >= p;
+      m.hidden = !ok;
+      if (ok) n++;
+    });
+    document.querySelectorAll("[data-p]").forEach((e) => (e.textContent = String(p)));
+    const total = document.querySelector("[data-n]");
+    if (total) total.textContent = `${n} modelos`;
+  };
+  botones.forEach((b) => b.addEventListener("click", () => elegir(Number(b.dataset.personas))));
+  elegir(4);
+</script>

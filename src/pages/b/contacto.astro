@@ -1,0 +1,28 @@
+---
+import LayoutB from "../../layouts/LayoutB.astro";
+import Formulario from "../../components/Formulario.astro";
+import Visita from "../../components/b/Visita.astro";
+import { contacto } from "../../data/vallcar";
+import { u } from "../../lib/u";
+---
+<LayoutB titulo="Visítanos" descripcion="Vallcar en Canovelles (Barcelona): dirección, horario, teléfono y formulario de contacto.">
+  <div class="portada">
+    <div class="wrap">
+      <div class="miga"><a href={u("/b/")}>Inicio</a> / Visítanos</div>
+      <h1>Ven a vernos o escríbenos</h1>
+      <p class="lead">Estamos junto a la C-17, en la carretera de Caldes a Canovelles. Hay aparcamiento en la propia exposición.</p>
+    </div>
+  </div>
+
+  <Visita />
+
+  <section class="sec sec-cielo">
+    <div class="wrap dos">
+      <div>
+        <h2>Escríbenos</h2>
+        <p style="margin-top:20px">Para cualquier consulta sobre caravanas, alquiler, taller, parking o tienda. También en <a href={`mailto:${contacto.email}`}>{contacto.email}</a>.</p>
+      </div>
+      <Formulario titulo="Tu consulta" asunto="Consulta general" />
+    </div>
+  </section>
+</LayoutB>

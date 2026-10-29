@@ -1,0 +1,50 @@
+---
+// Formulario compartido. Cada propuesta lo estiliza con sus clases .form-*.
+import { alquiler } from "../data/vallcar";
+
+interface Props {
+  titulo: string;
+  asunto: string;
+  tipo?: "contacto" | "alquiler" | "precio";
+  modelo?: string;
+  boton?: string;
+}
+const { titulo, asunto, tipo = "contacto", modelo, boton = "Enviar consulta" } = Astro.props;
+const id = asunto.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-");
+---
+<form class="form" data-formulario name={id} method="post" data-netlify="true" aria-labelledby={`${id}-t`}>
+  <h3 class="form-titulo" id={`${id}-t`}>{titulo}</h3>
+  <input type="hidden" name="asunto" value={modelo ? `${asunto}: ${modelo}` : asunto}>
+  <div data-campos>
+    {tipo === "alquiler" && (
+      <>
+        <div class="form-campo">
+          <label for="mod">Modelo</label>
+          <select id="mod" name="modelo">
+            {alquiler.map((m) => <option>{m.modelo}, {m.plazas} personas</option>)}
+          </select>
+        </div>
+        <div class="form-fila">
+          <div class="form-campo"><label for="ini">Recogida</label><input id="ini" name="recogida" type="date" required><span class="form-error" data-error-de="ini" aria-live="polite"></span></div>
+          <div class="form-campo"><label for="fin">Devolución</label><input id="fin" name="devolucion" type="date" required><span class="form-error" data-error-de="fin" aria-live="polite"></span></div>
+        </div>
+      </>
+    )}
+    {tipo === "precio" && (
+      <p class="form-modelo">Modelo: <strong>{modelo}</strong></p>
+    )}
+    <div class="form-campo"><label for={`${id}-n`}>Nombre</label><input id={`${id}-n`} name="nombre" autocomplete="name" required><span class="form-error" data-error-de={`${id}-n`} aria-live="polite"></span></div>
+    <div class="form-fila">
+      <div class="form-campo"><label for={`${id}-tel`}>Teléfono</label><input id={`${id}-tel`} name="telefono" type="tel" autocomplete="tel" required><span class="form-error" data-error-de={`${id}-tel`} aria-live="polite"></span></div>
+      <div class="form-campo"><label for={`${id}-e`}>Email <span class="form-opc">(opcional)</span></label><input id={`${id}-e`} name="email" type="email" autocomplete="email"><span class="form-error" data-error-de={`${id}-e`} aria-live="polite"></span></div>
+    </div>
+    <div class="form-campo"><label for={`${id}-m`}>Mensaje <span class="form-opc">(opcional)</span></label><textarea id={`${id}-m`} name="mensaje" rows="3"></textarea></div>
+    <label class="form-check"><input id={`${id}-ok`} type="checkbox" required> Acepto que Vallcar use estos datos para responderme.</label>
+    <span class="form-error" data-error-de={`${id}-ok`} aria-live="polite"></span>
+    <button class="btn btn-form" type="submit">{boton}</button>
+  </div>
+  <div class="form-ok" data-ok hidden tabindex="-1">
+    <strong>Consulta enviada.</strong>
+    <p>Te llamamos en horario de tienda, normalmente el mismo día. Si es urgente, llama al 938 464 298.</p>
+  </div>
+</form>

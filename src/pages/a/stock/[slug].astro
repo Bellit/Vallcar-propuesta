@@ -1,0 +1,62 @@
+---
+import LayoutA from "../../../layouts/LayoutA.astro";
+import Ficha from "../../../components/a/Ficha.astro";
+import Formulario from "../../../components/Formulario.astro";
+import { disponibles, foto, nombreTipo, type Caravana } from "../../../data/vallcar";
+import { u } from "../../../lib/u";
+
+export function getStaticPaths() {
+  return disponibles.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+const { c } = Astro.props as { c: Caravana };
+const parecidas = disponibles.filter((x) => x.slug !== c.slug && (x.tipo === c.tipo || x.plazas === c.plazas)).slice(0, 3);
+---
+<LayoutA titulo={`${c.marca} ${c.modelo}`} descripcion={`${c.marca} ${c.modelo}, ${c.plazas} plazas, ${c.longitud}. ${c.descripcion}`}>
+  <section class="sec">
+    <div class="wrap">
+      <div class="miga"><a href={u("/a/")}>Inicio</a> / <a href={u("/a/stock/")}>Stock</a> / {c.modelo}</div>
+      <div class="detalle">
+        <div>
+          <img class="grande" src={foto(c.img, 1200, 900)} alt={`${c.marca} ${c.modelo} en la exposición de Vallcar`} width="1200" height="900">
+        </div>
+        <div>
+          <span class={`etq ${c.tipo}`}>{nombreTipo[c.tipo]}</span>
+          <h1>{c.modelo}</h1>
+          <p class="serie">{c.marca}. {c.serie}</p>
+          <p>{c.descripcion}</p>
+          <table class="tabla">
+            <tr><th scope="row">Plazas para dormir</th><td>{c.plazas}</td></tr>
+            <tr><th scope="row">Longitud total</th><td>{c.longitud}</td></tr>
+            <tr><th scope="row">Distribución</th><td>{c.distribucion}</td></tr>
+            <tr><th scope="row">Dónde verla</th><td>Exposición de Canovelles</td></tr>
+          </table>
+          <p class="aviso">Precio y ficha técnica completa, bajo consulta. Si la financias o la aseguras con nosotros, te lo preparamos todo en la misma visita.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-gris">
+    <div class="wrap dos">
+      <div>
+        <h2>¿Te interesa esta {c.tipo === "remolque" ? "unidad" : "caravana"}?</h2>
+        <p style="margin-top:20px">Déjanos tu teléfono y te llamamos con el precio, la disponibilidad y las opciones de financiación. O ven directamente a verla.</p>
+        <ul class="lista-ok">
+          <li>Te la enseñamos por dentro, sin compromiso</li>
+          <li>Entrega con revisión en nuestro taller</li>
+          <li>Financiación y seguro gestionados por Vallcar</li>
+        </ul>
+      </div>
+      <Formulario titulo="Pedir precio" asunto="Pedir precio" tipo="precio" modelo={`${c.modelo} (${c.serie})`} boton="Pedir precio" />
+    </div>
+  </section>
+
+  {parecidas.length > 0 && (
+    <section class="sec">
+      <div class="wrap">
+        <div class="cabecera-sec"><h2>También te pueden encajar</h2><a class="btn btn-borde" href={u("/a/stock/")}>Ver todo el stock</a></div>
+        <div class="grid-stock">{parecidas.map((x) => <Ficha c={x} />)}</div>
+      </div>
+    </section>
+  )}
+</LayoutA>

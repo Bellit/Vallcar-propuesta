@@ -1,0 +1,118 @@
+---
+import LayoutA from "../../layouts/LayoutA.astro";
+import Ficha from "../../components/a/Ficha.astro";
+import Visita from "../../components/a/Visita.astro";
+import { disponibles, foto, fotos } from "../../data/vallcar";
+import { u } from "../../lib/u";
+
+const flechas = {
+  arriba: "M22 38V8M10 20 22 8l12 12",
+  derecha: "M6 22h30M24 10l12 12-12 12",
+  izquierda: "M38 22H8M20 10 8 22l12 12",
+};
+const panel = [
+  { href: u("/a/stock/"), nom: "Venta", det: "Sterckeman nuevas, ocasión y remolques Comanche", dist: "Exposición", f: flechas.arriba },
+  { href: u("/a/alquiler/"), nom: "Alquiler", det: "Caravanas nuevas, todo incluido", dist: "4 y 6 plazas", f: flechas.derecha },
+  { href: u("/a/taller/"), nom: "Taller", det: "Revisión anual, humedades, frenos y gestión de ITV", dist: "Pide cita", f: flechas.derecha },
+  { href: u("/a/parking/"), nom: "Parking", det: "Cubierto y descubierto, acceso 24/7", dist: "Lliçà d'Amunt, AP-7", f: flechas.izquierda },
+  { href: u("/a/tienda/"), nom: "Tienda", det: "Accesorios y recambios, envíos en 24/48 h", dist: "Miles de referencias", f: flechas.arriba },
+  { href: u("/a/seguros-y-financiacion/"), nom: "Seguros y financiación", det: "Te lo gestionamos con la compra", dist: "Consúltanos", f: flechas.derecha },
+];
+const destacadas = disponibles.slice(0, 4);
+---
+<LayoutA titulo="Caravanas Sterckeman y remolques Comanche en Barcelona">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>La mayor exposición de caravanas Sterckeman del país</h1>
+        <p class="lead">Importadores desde 1985. Ven a Canovelles, entra en cada modelo y sal con tu caravana, o con ella alquilada para el fin de semana.</p>
+        <div class="acciones">
+          <a class="btn btn-os" href={u("/a/stock/")}>Ver caravanas en stock</a>
+          <a class="btn btn-borde" href={u("/a/alquiler/")}>Alquilar una caravana</a>
+        </div>
+      </div>
+      <figure>
+        <img src={foto(fotos.exposicion, 900, 1000)} alt="Caravana Sterckeman en la exposición de Vallcar, con pinos al fondo" width="900" height="1000">
+        <figcaption>Exposición de Canovelles, junto a la C-17</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="buscador">
+    <div class="wrap">
+      <span class="tit">¿Qué buscas?</span>
+      <div class="grupo">
+        <a class="chip" href={u("/a/stock/?tipo=nueva")}>Caravanas nuevas</a>
+        <a class="chip" href={u("/a/stock/?tipo=ocasion")}>Ocasión</a>
+        <a class="chip" href={u("/a/stock/?tipo=remolque")}>Remolques</a>
+      </div>
+      <div class="grupo">
+        <span class="et">Plazas</span>
+        <a class="chip" href={u("/a/stock/?plazas=4")}>Hasta 4</a>
+        <a class="chip" href={u("/a/stock/?plazas=6")}>5 o más</a>
+      </div>
+      <span class="contador"><b>{disponibles.length}</b> disponibles</span>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="cabecera-sec">
+        <h2>Recién llegadas</h2>
+        <a class="btn btn-borde" href={u("/a/stock/")}>Ver las {disponibles.length} en stock</a>
+      </div>
+      <div class="grid-stock">
+        {destacadas.map((c) => <Ficha c={c} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-gris">
+    <div class="wrap servicios-lado">
+      <div>
+        <h2>Todo lo que tu caravana necesita, en un mismo sitio</h2>
+        <p style="margin-top:20px">Vendemos, alquilamos, reparamos y guardamos. Elige a dónde vas.</p>
+      </div>
+      <nav class="senal" aria-label="Servicios">
+        <ul>
+          {panel.map((p) => (
+            <li><a href={p.href}>
+              <svg class="flecha" viewBox="0 0 44 44" aria-hidden="true"><path d={p.f} fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span><span class="nom">{p.nom}</span><span class="det">{p.det}</span></span>
+              <span class="dist">{p.dist}</span>
+            </a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap dos dos-centro">
+      <img class="foto-redonda" src={foto(fotos.kids470, 900, 1100)} alt="Caravana Sterckeman Easy 470pe Kid's" loading="lazy" width="900" height="1100">
+      <div>
+        <h2>Alquila una Sterckeman nueva antes de comprar</h2>
+        <p style="margin-top:20px">Para un verano o para probar si el caravaning es lo vuestro. Las reservas las confirma personalmente nuestro equipo.</p>
+        <ul class="lista-ok">
+          <li>Easy 380CE y 390CP, para 4 personas</li>
+          <li>Easy 470PE y 496PE Kid's, para 6 personas con literas</li>
+          <li>Entrega con explicación de uso y todo el equipamiento</li>
+        </ul>
+        <a class="btn btn-am" href={u("/a/alquiler/")}>Ver modelos y fechas</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-osc">
+    <div class="wrap historia">
+      <div class="anio" aria-hidden="true">1985</div>
+      <div>
+        <h2>Desde los inicios del caravaning en España</h2>
+        <p style="margin-top:20px">Vallcar fue de las primeras empresas en importar grandes marcas al país. Hoy somos agentes de Sterckeman para toda España y distribuidores oficiales de remolques Comanche.</p>
+        <a class="btn btn-am" href={u("/a/quienes-somos/")}>Conocer Vallcar</a>
+      </div>
+    </div>
+  </section>
+
+  <Visita />
+</LayoutA>

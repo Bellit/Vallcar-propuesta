@@ -1,0 +1,36 @@
+---
+import { Content } from "../../docs/estudio-inicial.md";
+import { u } from "../lib/u";
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vallcar · Estudio inicial</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main>
+    <a class="volver" href={u("/")}>Volver a las propuestas</a>
+    <article><Content /></article>
+  </main>
+</body>
+</html>
+
+<style>
+  :global(body){margin:0;background:#F6F7F8;color:#22262B;font-family:"Inter Tight",system-ui,sans-serif;font-size:17px;line-height:1.6}
+  main{max-width:860px;margin:0 auto;padding:40px clamp(16px,4vw,40px) 80px}
+  .volver{font-weight:600}
+  article :global(h1){font-size:clamp(32px,5vw,48px);line-height:1.05;letter-spacing:-.02em;margin:28px 0 12px}
+  article :global(h2){font-size:28px;margin:48px 0 12px;letter-spacing:-.01em}
+  article :global(h3){font-size:21px;margin:32px 0 8px}
+  article :global(table){width:100%;border-collapse:collapse;font-size:15px;margin:16px 0;display:block;overflow-x:auto}
+  article :global(th),article :global(td){border-bottom:1px solid #DDE1E5;padding:10px 12px 10px 0;text-align:left;vertical-align:top}
+  article :global(blockquote){margin:20px 0;padding:12px 18px;background:#fff;border-left:4px solid #22262B}
+  article :global(code){background:#E9ECEF;padding:1px 5px;border-radius:4px;font-size:.92em}
+  article :global(hr){border:0;border-top:1px solid #DDE1E5;margin:32px 0}
+</style>

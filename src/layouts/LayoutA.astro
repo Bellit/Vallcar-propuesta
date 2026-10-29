@@ -1,0 +1,109 @@
+---
+import "../styles/a.css";
+import { contacto, paginas } from "../data/vallcar";
+import { u } from "../lib/u";
+
+interface Props {
+  titulo: string;
+  descripcion?: string;
+}
+const { titulo, descripcion = "Venta y alquiler de caravanas Sterckeman y remolques Comanche en Canovelles (Barcelona). Taller, parking y tienda de accesorios." } = Astro.props;
+const ruta = Astro.url.pathname;
+
+const menu = [
+  { href: u("/a/stock/"), texto: "Stock" },
+  { href: u("/a/alquiler/"), texto: "Alquiler" },
+  { href: u("/a/taller/"), texto: "Taller" },
+  { href: u("/a/parking/"), texto: "Parking" },
+  { href: u("/a/tienda/"), texto: "Tienda" },
+  { href: u("/a/seguros-y-financiacion/"), texto: "Seguros" },
+  { href: u("/a/quienes-somos/"), texto: "Quiénes somos" },
+  { href: u("/a/contacto/"), texto: "Contacto" },
+];
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{titulo} | Vallcar</title>
+  <meta name="description" content={descripcion}>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <div class="top">
+    <div class="wrap">
+      <span class="estado" data-horario><span data-horario-texto>Lunes a viernes 9:00–13:00 y 16:00–19:30</span></span>
+      <span><a href={contacto.telefonoHref}>{contacto.telefono}</a> &nbsp; <a href={`mailto:${contacto.email}`}>{contacto.email}</a></span>
+    </div>
+  </div>
+
+  <header class="cab">
+    <div class="wrap">
+      <a href={u("/a/")} class="logo" aria-label="Vallcar, inicio">
+        <svg viewBox="0 0 52 34" aria-hidden="true"><rect x="2" y="3" width="40" height="22" rx="7" fill="#FFD100" stroke="#2B2E33" stroke-width="3"/><rect x="9" y="9" width="10" height="7" rx="1.5" fill="#2B2E33"/><rect x="24" y="9" width="11" height="12" rx="1.5" fill="#2B2E33"/><circle cx="17" cy="28" r="4.5" fill="#2B2E33"/><path d="M42 21h8" stroke="#2B2E33" stroke-width="3" stroke-linecap="round"/></svg>
+        VALLCAR
+      </a>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <ul>
+          {menu.map((m) => <li><a href={m.href} aria-current={ruta.startsWith(m.href) ? "page" : undefined}>{m.texto}</a></li>)}
+        </ul>
+      </nav>
+      <a class="btn btn-os cta-cab" href={u("/a/contacto/")}>Cómo llegar</a>
+      <button class="btn btn-borde menu-btn" type="button" aria-expanded="false" aria-controls="nav" data-menu-boton>Menú</button>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <slot />
+  </main>
+
+  <footer class="pie">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <h2>Vallcar, S.A.</h2>
+          <p>{contacto.direccion}<br>{contacto.cp}<br>{contacto.referencia}</p>
+          <p><a href={contacto.telefonoHref}>{contacto.telefono}</a><br><a href={`mailto:${contacto.email}`}>{contacto.email}</a></p>
+        </div>
+        <div>
+          <h2>Comprar</h2>
+          <ul>
+            <li><a href={u("/a/stock/?tipo=nueva")}>Caravanas nuevas</a></li>
+            <li><a href={u("/a/stock/?tipo=ocasion")}>Ocasión</a></li>
+            <li><a href={u("/a/stock/?tipo=remolque")}>Remolques Comanche</a></li>
+            <li><a href={u("/a/seguros-y-financiacion/")}>Seguros y financiación</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Servicios</h2>
+          <ul>
+            <li><a href={u("/a/alquiler/")}>Alquiler</a></li>
+            {paginas.filter((p) => ["taller", "parking", "tienda"].includes(p.slug)).map((p) => <li><a href={u(`/a/${p.slug}/`)}>{p.menu}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h2>Síguenos</h2>
+          <ul>
+            {contacto.redes.map((r) => <li><a href={r.url} rel="noopener">{r.nombre}</a></li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="legal">
+        <span>Caravaning desde 1985</span>
+        <span><a href="#">Aviso legal</a> &nbsp; <a href="#">Privacidad</a> &nbsp; <a href="#">Cookies</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="nota-propuesta" href={u("/")}>Propuesta A · volver a las propuestas</a>
+
+  <script>
+    import "../scripts/comun.ts";
+  </script>
+</body>
+</html>
