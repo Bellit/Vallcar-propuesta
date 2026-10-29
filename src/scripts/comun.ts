@@ -67,7 +67,7 @@ if (lista) {
   aplica();
 }
 
-// Formularios: validación y confirmación. En producción se envían con Netlify Forms o similar.
+// Formularios: validación y confirmación. En la maqueta no se envía nada; en producción irán a un servicio de formularios.
 document.querySelectorAll<HTMLFormElement>("form[data-formulario]").forEach((f) => {
   f.noValidate = true;
   f.addEventListener("submit", (ev) => {

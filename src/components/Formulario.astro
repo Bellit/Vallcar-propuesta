@@ -12,7 +12,7 @@ interface Props {
 const { titulo, asunto, tipo = "contacto", modelo, boton = "Enviar consulta" } = Astro.props;
 const id = asunto.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-");
 ---
-<form class="form" data-formulario name={id} method="post" data-netlify="true" aria-labelledby={`${id}-t`}>
+<form class="form" data-formulario name={id} aria-labelledby={`${id}-t`}>
   <h3 class="form-titulo" id={`${id}-t`}>{titulo}</h3>
   <input type="hidden" name="asunto" value={modelo ? `${asunto}: ${modelo}` : asunto}>
   <div data-campos>

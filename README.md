@@ -18,17 +18,21 @@ npm install
 npm run dev
 ```
 
-Para generar la versión estática en `dist/` (por ejemplo, para publicarla en Netlify):
+Para generar la versión estática en `dist/`:
 
 ```bash
 npm run build
 ```
 
+## Publicación
+
+La web se publica en GitHub Pages, en https://bellit.github.io/Vallcar-propuesta/. El workflow `.github/workflows/deploy.yml` la compila y la publica en cada push a `main`. Como vive en la subruta `/Vallcar-propuesta/`, todos los enlaces internos pasan por el helper `u()` de `src/lib/u.ts`.
+
 ## Dónde está cada cosa
 
 - `src/data/vallcar.ts`: stock, modelos de alquiler, horarios y textos de las páginas, compartidos por las dos propuestas. En el proyecto real estos datos vendrán del CMS. Para marcar una caravana como vendida basta con `vendida: true`, y deja de publicarse.
 - `src/layouts/` y `src/styles/`: la cabecera, el pie y los estilos de cada propuesta.
-- `src/components/Formulario.astro`: formulario común (contacto, pedir precio y alquiler) con validación. Lleva `data-netlify` para que funcione en Netlify sin servidor propio.
+- `src/components/Formulario.astro`: formulario común (contacto, pedir precio y alquiler) con validación. En la maqueta no envía nada: valida y muestra la confirmación.
 - `src/scripts/comun.ts`: horario "abierto ahora", menú móvil, filtros de stock y validación de formularios.
 
 Las fotos se cargan desde la web actual de Vallcar (Wix). Antes de publicar la web definitiva hay que sustituirlas por fotos propias.
