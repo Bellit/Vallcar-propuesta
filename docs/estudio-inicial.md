@@ -67,58 +67,39 @@ Más cálida y familiar, pensada para quien todavía no sabe qué modelo necesit
 
 Las fotos actuales son de móvil y tienen calidades desiguales. Algunas traen bandas blancas, como la del Montana Explorer. Recomendamos presupuestar **una sesión fotográfica** de la exposición, los interiores y el taller, o pedir a Sterckeman las imágenes oficiales de cada modelo.
 
-## 4. Propuestas de tecnología
+## 4. Tecnología: Astro + CMS headless
 
-### Opción 1 (recomendada): Astro + CMS headless
+Vallcar no va a tener tienda online. Las ventas se cierran por teléfono o en persona, y la web solo tiene que captar contactos. Para eso, una web estática con un gestor de contenidos es la opción más rápida, segura y barata de mantener.
 
-- **Front**: [Astro](https://astro.build), una web estática muy rápida que solo carga JavaScript donde hace falta: filtros de stock, plano interactivo y formularios.
-- **Contenidos**: un CMS donde Vallcar gestiona el **stock** (modelo, estado nueva/ocasión/vendida, plazas, longitud, fotos y precio opcional), los **modelos de alquiler**, horarios y textos. Candidatos:
-  - **Sanity**: editor visual cómodo, plan gratuito suficiente y gestión de imágenes con recorte automático.
-  - **Decap CMS o Keystatic**: gratuitos y guardan el contenido en el propio repositorio de GitHub. Son más sencillos, pero un poco menos amables para el cliente.
-- **Hosting**: Netlify, Vercel o Cloudflare Pages. Son gratuitos o de bajo coste para este volumen, con HTTPS y CDN.
-- **Formularios**: Netlify Forms o una función con Resend o Brevo para el email, con anti-spam.
+- **Front**: [Astro](https://astro.build), una web estática muy rápida que solo carga JavaScript donde hace falta: filtros de stock, plano interactivo y formularios. Las dos maquetas de este estudio ya están hechas en Astro y sirven de base para el desarrollo.
+- **Contenidos**: **Sanity** como CMS. Desde su panel, Vallcar gestiona el **stock** (modelo, estado nueva/ocasión/vendida, plazas, longitud, fotos y precio opcional), los **modelos de alquiler**, los horarios, los avisos y los textos. El editor es cómodo, el plan gratuito basta para este volumen y recorta las imágenes automáticamente. Al guardar un cambio, la web se vuelve a publicar sola en uno o dos minutos.
+- **Hosting**: Netlify, Vercel o Cloudflare Pages. Para este volumen son gratuitos, con HTTPS y CDN incluidos.
+- **Formularios**: un servicio de formularios (Netlify Forms, o una función con Resend o Brevo) que envía cada solicitud al email de Vallcar, con anti-spam.
 - **Ventajas**: máximo rendimiento y SEO, seguridad (no hay base de datos ni plugins expuestos), coste de hosting casi nulo y diseño sin limitaciones.
-- **Inconvenientes**: el cliente aprende un panel nuevo, y los cambios de estructura (no los de contenido) requieren desarrollador.
-
-### Opción 2: WordPress a medida
-
-- Tema a medida (bloques) más ACF, con tipos de contenido "Caravana" y "Modelo de alquiler", y Contact Form 7 o Gravity Forms.
-- **Hosting** gestionado en España (por ejemplo Raiola, Webempresa o SiteGround).
-- **Ventajas**: panel muy conocido, fácil encontrar soporte y un paso natural a **WooCommerce** si se quiere tienda online.
-- **Inconvenientes**: hay que mantener actualizaciones de núcleo y plugins (seguridad), el hosting es de pago, y es más lento si no se cuida.
-
-### Opción 3: rediseño dentro de Wix (Wix Studio)
-
-- **Ventajas**: sin migración, el cliente ya conoce la herramienta y es la opción más barata a corto plazo. Wix tiene CMS para el stock con páginas dinámicas.
-- **Inconvenientes**: el rendimiento y el SEO técnico siguen limitados, la cuota mensual continúa, el plano interactivo y los filtros a medida cuestan más, y se depende de la plataforma.
-
-### Comparativa
-
-| | Astro + CMS | WordPress | Wix Studio |
-|---|---|---|---|
-| Rendimiento y SEO | Excelente | Bueno, si se cuida | Correcto |
-| Facilidad para el cliente | Buena | Muy buena | Muy buena |
-| Mantenimiento técnico | Muy bajo | Medio (actualizaciones) | Nulo |
-| Coste de hosting anual | 0–100 € | 100–300 € | Cuota Wix |
-| Libertad de diseño e interacciones | Total | Alta | Media |
-Los precios de hosting son orientativos y hay que confirmarlos al presupuestar.
-
-**Decisión: opción 1, Astro + CMS headless.** Vallcar no va a tener tienda online: las ventas se cierran por teléfono o en persona y la web solo tiene que captar contactos. Así desaparece la principal ventaja de WordPress (WooCommerce), y Astro ofrece la web más rápida, segura y barata de mantener. El CMS (preferiblemente Sanity, por ser más cómodo para el cliente) cubre lo que Vallcar edita a menudo: el stock, el alquiler, los horarios y los avisos.
+- **A tener en cuenta**: el cliente tiene que aprender un panel nuevo (incluimos formación), y los cambios de estructura, que no los de contenido, requieren desarrollador.
 
 La página de Tienda queda como página informativa: categorías de accesorios y recambios, cómo pedir (teléfono, WhatsApp o en persona) y condiciones de envío.
 
-## 5. Alcance orientativo para el presupuesto (fase 1, opción 1)
+## 5. Alcance orientativo para el presupuesto (fase 1)
 
-| Bloque | Horas estimadas |
-|---|---|
-| Descubrimiento, diseño final (dirección elegida) y plantillas en alta | 20–30 |
-| Desarrollo de plantillas: inicio, stock (listado y ficha), alquiler, taller, parking, tienda, servicios (seguros y financiación), quiénes somos, contacto y legales | 40–60 |
-| CMS: modelado del stock y el alquiler, panel y vista previa | 15–25 |
-| Formularios: contacto, pedir precio, solicitud de alquiler, cita de taller y parking; anti-spam y email | 8–12 |
-| Migración de textos y fotos, y redirecciones 301 desde las URLs de Wix | 8–12 |
-| SEO técnico (schema LocalBusiness y Product, sitemap, Google Business Profile), analítica y banner de cookies RGPD | 8–12 |
-| Pruebas, accesibilidad, rendimiento y formación al cliente | 8–12 |
-| **Total** | **107–163 h** |
+El desarrollo se hace con asistencia de IA (Claude). La IA se encarga de la mayor parte del trabajo mecánico: plantillas, componentes, modelado del CMS, formularios, SEO técnico, redirecciones y pruebas automáticas. Las horas que se presupuestan son las de trabajo humano: decisiones con el cliente, dirección y revisión de lo que genera la IA, ajustes finos, pruebas reales en dispositivos y puesta en marcha. Además, se parte de las maquetas funcionales de este estudio, que ya cubren la estructura de todas las páginas.
+
+| Bloque | Horas | Importe (25 €/h) |
+|---|---|---|
+| Reunión con el cliente, elección de dirección y diseño final | 6–10 | 150–250 € |
+| Plantillas definitivas a partir de la maqueta: inicio, stock (listado y ficha), alquiler, taller, parking, tienda, seguros y financiación, quiénes somos, contacto y legales | 10–16 | 250–400 € |
+| CMS Sanity: modelado del stock y el alquiler, panel, vista previa y publicación automática | 6–10 | 150–250 € |
+| Formularios: contacto, pedir precio, solicitud de alquiler, cita de taller y parking; envío por email y anti-spam | 3–5 | 75–125 € |
+| Migración de textos y fotos, y redirecciones 301 desde las URLs de Wix | 4–6 | 100–150 € |
+| SEO técnico (schema LocalBusiness y Product, sitemap, Google Business Profile), analítica y banner de cookies RGPD | 3–5 | 75–125 € |
+| Pruebas en dispositivos, accesibilidad y rendimiento | 4–6 | 100–150 € |
+| Puesta en producción: hosting, dominio y DNS sin cortar el correo | 2–3 | 50–75 € |
+| Formación al cliente en el panel y guía de uso | 2–3 | 50–75 € |
+| **Total** | **40–64 h** | **1.000–1.600 €** |
+
+Importes sin IVA. La horquilla depende sobre todo de las respuestas a las preguntas del apartado 6: mostrar precios, número de unidades de stock y quién prepara los textos.
+
+Costes recurrentes previstos: hosting y Sanity, 0 € en sus planes gratuitos para este volumen. El dominio vallcar.com se mantiene; hay que confirmar quién lo gestiona (pregunta 9).
 
 No incluido, a presupuestar aparte: sesión fotográfica, redacción de textos nuevos, versión en catalán o en otros idiomas, reservas de alquiler con pago y calendario en tiempo real, y mantenimiento mensual. La tienda online queda descartada.
 
