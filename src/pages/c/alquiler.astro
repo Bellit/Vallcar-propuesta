@@ -1,0 +1,46 @@
+---
+import LayoutC from "../../layouts/LayoutC.astro";
+import Portada from "../../components/c/Portada.astro";
+import Formulario from "../../components/Formulario.astro";
+import Visita from "../../components/c/Visita.astro";
+import { alquiler, foto, fotos } from "../../data/vallcar";
+---
+<LayoutC titulo="Alquiler de caravanas Sterckeman en Barcelona" descripcion="Alquila una caravana Sterckeman nueva en Canovelles, con todo incluido. Modelos de 4 y 6 plazas.">
+  <Portada miga="Alquiler" titulo="Pruébala antes <em>de que sea tuya.</em>" lead="Caravanas Sterckeman nuevas y con todo incluido. Para un verano, un puente o para decidir antes de comprar." img={fotos.kids470} />
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="intro"><h2>Elige según <em>cuántos sois.</em></h2><p>Sujetos a disponibilidad en tus fechas.</p></div>
+      <div class="tarjetas">
+        {alquiler.map((m, i) => (
+          <article class="tarjeta" data-revela style={`--d:${i * 0.08}s`}>
+            <div class="tarjeta-foto">
+              <img src={foto(m.img, 800, 960)} alt={`Sterckeman ${m.modelo}`} loading="lazy" width="800" height="960">
+              <span class="sello">{m.plazas} personas</span>
+            </div>
+            <h3>{m.modelo}</h3>
+            <p>{m.camas}.</p>
+            <p class="extras">{m.extras.join(" · ")}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-hueso">
+    <div class="wrap dos">
+      <div>
+        <h2 data-revela>Cómo <em>funciona.</em></h2>
+        <ol class="pasos pasos-claro">
+          <li data-revela><span>01</span>Pide fechas y modelo. Te contesta una persona del equipo, normalmente el mismo día.</li>
+          <li data-revela><span>02</span>Recógela en Canovelles. Te explicamos cómo funciona todo y revisamos el enganche contigo.</li>
+          <li data-revela><span>03</span>Si os convence, cómprala. Te asesoramos con la financiación y el seguro.</li>
+        </ol>
+        <p class="aviso" data-revela>No se paga nada hasta que confirmamos la reserva.</p>
+      </div>
+      <Formulario titulo="Solicitar alquiler" asunto="Solicitud de alquiler" tipo="alquiler" boton="Enviar solicitud" />
+    </div>
+  </section>
+
+  <Visita />
+</LayoutC>

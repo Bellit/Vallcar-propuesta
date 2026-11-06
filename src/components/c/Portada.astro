@@ -1,0 +1,16 @@
+---
+// Cabecera de las páginas interiores: título grande sobre fondo oscuro, con foto opcional que se desplaza al bajar.
+import { foto } from "../../data/vallcar";
+import { u } from "../../lib/u";
+
+interface Props { miga: string; titulo: string; lead: string; img?: string }
+const { miga, titulo, lead, img } = Astro.props;
+---
+<section class:list={["portada", { "con-foto": img }]} data-progreso="vista">
+  {img && <div class="portada-foto"><img src={foto(img, 1920, 1100)} alt="" width="1920" height="1100" fetchpriority="high"></div>}
+  <div class="wrap">
+    <p class="miga hero-in" style="--d:.05s"><a href={u("/c/")}>Inicio</a> <span aria-hidden="true">/</span> {miga}</p>
+    <h1 class="hero-in" style="--d:.15s" set:html={titulo} />
+    <p class="lead hero-in" style="--d:.3s">{lead}</p>
+  </div>
+</section>

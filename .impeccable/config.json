@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/styles/c.css"
+        ],
+        "createdAt": "2026-11-06T11:53:34.842Z",
+        "reason": "Claude: borders draw the video pause/play icon glyph (12px span), not a card accent"
+      },
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "src/styles/c.css"
+        ],
+        "createdAt": "2026-11-06T11:53:35.095Z",
+        "reason": "Claude: same pause/play icon glyph, no rounded card involved"
+      }
+    ]
+  }
+}

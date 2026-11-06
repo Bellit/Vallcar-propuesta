@@ -1,12 +1,13 @@
 # Vallcar Propuesta
 
-Estudio inicial y dos propuestas de rediseño para [vallcar.com](https://www.vallcar.com/), hechas con [Astro](https://astro.build).
+Estudio inicial y tres propuestas de rediseño para [vallcar.com](https://www.vallcar.com/), hechas con [Astro](https://astro.build).
 
 | Ruta | Contenido |
 |---|---|
 | `/` | Portada con enlace a las dos propuestas |
 | `/a/` | Propuesta A, "Km 10.2": identidad de carretera, stock filtrable y panel de servicios |
 | `/b/` | Propuesta B, "Plano de planta": elegir caravana según cuántos dormís, alquiler como puerta de entrada |
+| `/c/` | Propuesta C, "Gran Turismo": landing de producto premium con vídeo en el hero y animaciones ligadas al scroll |
 | `/estudio/` | Estudio inicial: análisis de la web actual, tecnología y alcance ([docs/estudio-inicial.md](docs/estudio-inicial.md)) |
 
 Cada propuesta incluye inicio, stock con filtros, ficha de cada caravana, alquiler, taller, parking, tienda, seguros y financiación, quiénes somos y contacto.
@@ -36,3 +37,5 @@ La web se publica en GitHub Pages, en https://bellit.github.io/Vallcar-propuesta
 - `src/scripts/comun.ts`: horario "abierto ahora", menú móvil, filtros de stock y validación de formularios.
 
 Las fotos se cargan desde la web actual de Vallcar (Wix). Antes de publicar la web definitiva hay que sustituirlas por fotos propias.
+
+El vídeo del hero de la propuesta C es provisional: un clip gratuito de Mixkit (licencia Mixkit) servido desde su CDN. En el proyecto real se sustituye por un vídeo propio de una Sterckeman, comprimido y alojado en la web. Las animaciones de la propuesta C están en `src/scripts/movimiento.ts`, sin librerías, y respetan `prefers-reduced-motion`.

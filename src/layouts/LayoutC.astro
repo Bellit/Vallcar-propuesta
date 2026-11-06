@@ -1,0 +1,96 @@
+---
+import "../styles/c.css";
+import { contacto, paginas } from "../data/vallcar";
+import { u } from "../lib/u";
+
+interface Props {
+  titulo: string;
+  descripcion?: string;
+  // Con cabecera transparente sobre un hero oscuro a pantalla completa.
+  sobreHero?: boolean;
+}
+const { titulo, descripcion = "Caravanas Sterckeman nuevas, alquiler, taller y parking en Canovelles (Barcelona). Desde 1985.", sobreHero = false } = Astro.props;
+const ruta = Astro.url.pathname;
+
+const menu = [
+  { href: u("/c/stock/"), texto: "Caravanas" },
+  { href: u("/c/alquiler/"), texto: "Alquiler" },
+  { href: u("/c/taller/"), texto: "Taller" },
+  { href: u("/c/parking/"), texto: "Parking" },
+  { href: u("/c/tienda/"), texto: "Tienda" },
+  { href: u("/c/quienes-somos/"), texto: "Vallcar" },
+];
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{titulo} | Vallcar</title>
+  <meta name="description" content={descripcion}>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0E0F0F">
+  <script is:inline>document.documentElement.classList.add("js")</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class:list={["cab", { "cab-hero": sobreHero }]} data-cab>
+    <div class="wrap">
+      <a href={u("/c/")} class="logo" aria-label="Vallcar, inicio">Vallcar<sup>1985</sup></a>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <ul>
+          {menu.map((m) => <li><a href={m.href} aria-current={ruta.startsWith(m.href) ? "page" : undefined}>{m.texto}</a></li>)}
+        </ul>
+      </nav>
+      <div class="cab-der">
+        <a class="btn btn-claro btn-peq" href={u("/c/contacto/")}>Visítanos</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir el menú" data-menu-boton><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <slot />
+  </main>
+
+  <footer class="pie">
+    <div class="wrap">
+      <p class="pie-lema">Vallcar<em>.</em></p>
+      <div class="cols">
+        <div>
+          <h2>Exposición</h2>
+          <p>{contacto.direccion}<br>{contacto.cp}</p>
+          <p class="estado" data-horario><span data-horario-texto>Horario de tienda</span></p>
+        </div>
+        <div>
+          <h2>Contacto</h2>
+          <p><a href={contacto.telefonoHref}>{contacto.telefono}</a><br><a href={`mailto:${contacto.email}`}>{contacto.email}</a></p>
+          <p>{contacto.redes.map((r, i) => <>{i > 0 && " · "}<a href={r.url} rel="noopener">{r.nombre}</a></>)}</p>
+        </div>
+        <div>
+          <h2>Qué hacemos</h2>
+          <ul>
+            <li><a href={u("/c/stock/")}>Venta de caravanas</a></li>
+            <li><a href={u("/c/alquiler/")}>Alquiler</a></li>
+            {paginas.filter((p) => p.slug !== "quienes-somos").map((p) => <li><a href={u(`/c/${p.slug}/`)}>{p.menu}</a></li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="legal">
+        <span>Vallcar, S.A. Agentes de Sterckeman en España</span>
+        <span><a href="#">Aviso legal</a> &nbsp; <a href="#">Privacidad</a> &nbsp; <a href="#">Cookies</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="nota-propuesta" href={u("/")}>Propuesta C · volver a las propuestas</a>
+
+  <script>
+    import "../scripts/comun.ts";
+    import "../scripts/movimiento.ts";
+  </script>
+</body>
+</html>

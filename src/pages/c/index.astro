@@ -1,0 +1,157 @@
+---
+import LayoutC from "../../layouts/LayoutC.astro";
+import Visita from "../../components/c/Visita.astro";
+import { disponibles, foto, fotos, nombreTipo } from "../../data/vallcar";
+import { u } from "../../lib/u";
+
+// Vídeo provisional de banco de imágenes (Mixkit, licencia gratuita). En el proyecto real: un vídeo propio de una Sterckeman.
+const video = {
+  src: "https://assets.mixkit.co/videos/26600/26600-720.mp4",
+  poster: "https://assets.mixkit.co/videos/26600/26600-thumb-720-0.jpg",
+};
+
+const manifiesto =
+  "Desde 1985 vendemos, alquilamos y cuidamos caravanas en el Vallès. Somos importadores de Sterckeman para toda España y en Canovelles puedes entrar en cada una antes de decidir.";
+const palabras = manifiesto.split(" ");
+
+const servicios = [
+  { href: u("/c/taller/"), nombre: "Taller", texto: "Revisión anual, frenos, humedades e ITV. Todas las marcas.", img: fotos.sport455 },
+  { href: u("/c/parking/"), nombre: "Parking", texto: "Cubierto o descubierto, con acceso 24 horas junto a la AP-7.", img: fotos.exposicion },
+  { href: u("/c/tienda/"), nombre: "Tienda", texto: "Miles de accesorios y recambios. Envíos en 24/48 h.", img: fotos.sport480 },
+  { href: u("/c/seguros-y-financiacion/"), nombre: "Seguros y financiación", texto: "Pagar y asegurar tu caravana sin salir de Vallcar.", img: fotos.kids470 },
+];
+---
+<LayoutC titulo="Caravanas Sterckeman en Barcelona" sobreHero>
+  <!-- 1. Hero: el vídeo ocupa la pantalla y, al bajar, se recoge en un marco -->
+  <section class="hero" data-progreso="fijo" data-quieto="0" aria-label="Presentación">
+    <div class="hero-fijo">
+      <div class="hero-marco" data-video>
+        <video autoplay muted loop playsinline preload="auto" poster={video.poster} width="1280" height="720" aria-hidden="true">
+          <source src={video.src} type="video/mp4">
+        </video>
+        <div class="hero-velo"></div>
+        <button class="video-boton" type="button" data-video-boton aria-pressed="false" aria-label="Pausar el vídeo"><span></span></button>
+      </div>
+      <div class="hero-texto wrap">
+        <p class="antetitulo hero-in" style="--d:.1s">Sterckeman · Canovelles, Barcelona</p>
+        <h1 class="hero-titulo">
+          <span class="linea"><span class="hero-in" style="--d:.2s">Tu casa,</span></span>
+          <span class="linea"><span class="hero-in" style="--d:.35s"><em>donde aparques.</em></span></span>
+        </h1>
+        <div class="hero-pie hero-in" style="--d:.6s">
+          <p>Caravanas nuevas, alquiler y taller propio. Más de cuarenta años preparando viajes.</p>
+          <div class="acciones">
+            <a class="btn btn-claro" href={u("/c/stock/")}>Ver caravanas</a>
+            <a class="btn btn-cristal" href={u("/c/alquiler/")}>Alquilar una</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-baja" aria-hidden="true"><span></span>Desliza</div>
+    </div>
+  </section>
+
+  <!-- 2. Manifiesto: las palabras se encienden al hacer scroll -->
+  <section class="manifiesto" data-progreso="fijo" aria-label="Quiénes somos">
+    <div class="manifiesto-fijo">
+      <div class="wrap">
+        <p class="antetitulo">Vallcar, desde 1985</p>
+        <p class="manifiesto-texto" style={`--n:${palabras.length}`}>
+          {palabras.map((w, i) => <span style={`--i:${i}`}>{w} </span>)}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Modelos: galería horizontal que avanza con el scroll vertical -->
+  <section class="galeria" data-progreso="fijo" data-horizontal aria-labelledby="gal-t">
+    <div class="galeria-fijo">
+      <div class="galeria-cab wrap">
+        <div>
+          <p class="antetitulo">En exposición ahora</p>
+          <h2 id="gal-t">Elige la tuya.<br><em>Entra en ella.</em></h2>
+        </div>
+        <a class="enlace-flecha" href={u("/c/stock/")}>Ver las {disponibles.length} <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="galeria-pista" data-pista>
+        {disponibles.map((c, i) => (
+          <a class="pieza" href={u(`/c/stock/${c.slug}/`)}>
+            <div class="pieza-foto">
+              <img src={foto(c.img, 900, 1100)} alt={`${c.marca} ${c.modelo}`} loading={i < 3 ? "eager" : "lazy"} width="900" height="1100">
+            </div>
+            <div class="pieza-info">
+              <span class="pieza-num">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{c.modelo}</h3>
+              <p>{c.plazas} plazas · {c.longitud} · {nombreTipo[c.tipo]}</p>
+            </div>
+          </a>
+        ))}
+        <a class="pieza pieza-fin" href={u("/c/stock/")}>
+          <span>Todo el stock</span>
+          <span class="flecha-grande" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Cifras con imagen que se abre -->
+  <section class="cifras">
+    <div class="wrap cifras-grid">
+      <div class="cifras-foto" data-progreso="vista">
+        <img src={foto(fotos.exposicion, 1200, 1400)} alt="Caravanas Sterckeman en la exposición de Vallcar en Canovelles" loading="lazy" width="1200" height="1400">
+      </div>
+      <div class="cifras-texto">
+        <p class="antetitulo" data-revela>Hecha para viajar en familia</p>
+        <h2 data-revela>Hasta seis plazas.<br><em>Ni un centímetro de más.</em></h2>
+        <p class="cifras-lead" data-revela>Sterckeman diseña en Francia caravanas ligeras que se remolcan con un coche familiar. Con literas para los niños, cocina completa y aseo.</p>
+        <dl class="cifras-lista">
+          <div data-revela><dt>plazas en las Kid's</dt><dd><span data-cuenta="6">6</span></dd></div>
+          <div data-revela><dt>metros la más grande</dt><dd><span data-cuenta="7">7</span></dd></div>
+          <div data-revela><dt>vendiendo caravanas</dt><dd><span data-cuenta="1985" data-desde="1950">1985</span></dd></div>
+          <div data-revela><dt>acceso al parking</dt><dd>24/7</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Alquiler: imagen a sangre con zoom lento -->
+  <section class="alquila" data-progreso="vista" aria-labelledby="alq-t">
+    <div class="alquila-foto">
+      <img src={foto(fotos.kids470, 1920, 1200)} alt="" loading="lazy" width="1920" height="1200">
+    </div>
+    <div class="wrap alquila-texto">
+      <p class="antetitulo" data-revela>Alquiler</p>
+      <h2 id="alq-t" data-revela>Pruébala antes<br><em>de que sea tuya.</em></h2>
+      <ol class="pasos">
+        <li data-revela><span>01</span>Pide fechas y modelo. Te responde una persona, normalmente el mismo día.</li>
+        <li data-revela><span>02</span>Recógela en Canovelles. Te enseñamos cómo funciona todo antes de salir.</li>
+        <li data-revela><span>03</span>Si os convence, cómprala. Nos encargamos de la financiación y el seguro.</li>
+      </ol>
+      <a class="btn btn-claro" href={u("/c/alquiler/")} data-revela>Ver modelos de alquiler</a>
+    </div>
+  </section>
+
+  <!-- 6. Servicios: filas grandes con imagen al pasar -->
+  <section class="servicios" aria-labelledby="serv-t">
+    <div class="wrap">
+      <div class="servicios-cab">
+        <p class="antetitulo" data-revela>Después de comprarla</p>
+        <h2 id="serv-t" data-revela>Seguimos aquí.</h2>
+      </div>
+      <ul class="filas">
+        {servicios.map((s, i) => (
+          <li data-revela style={`--d:${i * 0.08}s`}>
+            <a class="fila" href={s.href}>
+              <span class="fila-num">{String(i + 1).padStart(2, "0")}</span>
+              <span class="fila-nombre">{s.nombre}</span>
+              <span class="fila-texto">{s.texto}</span>
+              <span class="fila-flecha" aria-hidden="true">→</span>
+              <img class="fila-img" src={foto(s.img, 480, 360)} alt="" loading="lazy" width="480" height="360">
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Visita />
+</LayoutC>

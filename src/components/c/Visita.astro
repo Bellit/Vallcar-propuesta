@@ -1,0 +1,23 @@
+---
+import { contacto, horario } from "../../data/vallcar";
+---
+<section class="visita" id="visita" aria-labelledby="visita-t">
+  <div class="wrap visita-grid">
+    <div>
+      <p class="antetitulo" data-revela>Ven a Canovelles</p>
+      <h2 id="visita-t" data-revela>La mejor forma de elegirla<br><em>es entrar en ella.</em></h2>
+      <p class="visita-dir" data-revela>{contacto.direccion}, {contacto.cp}. {contacto.referencia}.</p>
+      <ul class="horas" data-revela>
+        {horario.map((h) => <li><span>{h.dias}</span><b>{h.horas}</b></li>)}
+      </ul>
+      <p class="estado" data-horario data-revela><span data-horario-texto>Horario de tienda</span></p>
+      <div class="acciones" data-revela>
+        <a class="btn btn-claro" href={contacto.maps} rel="noopener">Cómo llegar</a>
+        <a class="btn btn-cristal" href={contacto.telefonoHref}>Llamar al {contacto.telefono}</a>
+      </div>
+    </div>
+    <div class="mapa-marco" data-revela>
+      <iframe class="mapa" title="Mapa de Vallcar en Canovelles" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Vallcar%20Canovelles&z=14&output=embed"></iframe>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+---
+import LayoutC from "../../layouts/LayoutC.astro";
+import Portada from "../../components/c/Portada.astro";
+import Formulario from "../../components/Formulario.astro";
+import Visita from "../../components/c/Visita.astro";
+import { foto, paginas, type Pagina } from "../../data/vallcar";
+
+export function getStaticPaths() {
+  return paginas.map((p) => ({ params: { pagina: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Pagina };
+---
+<LayoutC titulo={p.titulo} descripcion={p.entradilla}>
+  <Portada miga={p.menu} titulo={p.titulo} lead={p.entradilla} img={p.img} />
+
+  <section class="sec">
+    <div class="wrap dos dos-centro">
+      <div>
+        {p.texto.map((t) => <p class="texto-grande" data-revela>{t}</p>)}
+        <ul class="lista" data-revela>{p.puntos.map((x) => <li>{x}</li>)}</ul>
+        {p.lugar && <p class="aviso" data-revela><strong>Dónde está: {p.lugar.nombre}.</strong> {p.lugar.detalle}</p>}
+      </div>
+      <div class="foto-r" data-revela><img src={foto(p.img, 900, 1100)} alt="" loading="lazy" width="900" height="1100"></div>
+    </div>
+  </section>
+
+  <section class="sec sec-hueso">
+    <div class="wrap dos">
+      <div>
+        <h2 data-revela>{p.asunto}.</h2>
+        <p class="texto-grande" data-revela>Te respondemos en horario de tienda. Si lo prefieres, llámanos al 938 464 298{p.slug === "parking" ? " o al 640 542 128" : ""}.</p>
+      </div>
+      <Formulario titulo="Tus datos" asunto={p.asunto} />
+    </div>
+  </section>
+
+  {p.slug !== "parking" && <Visita />}
+</LayoutC>
