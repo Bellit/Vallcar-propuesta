@@ -20,6 +20,12 @@
         ],
         "createdAt": "2026-11-06T11:53:35.095Z",
         "reason": "Claude: same pause/play icon glyph, no rounded card involved"
+      },
+      {
+        "rule": "overused-font",
+        "value": "instrument serif",
+        "createdAt": "2026-11-06T12:32:53.749Z",
+        "reason": "User confirmed: keep Instrument Serif for proposal C headlines (2026-11-06)"
       }
     ]
   }
