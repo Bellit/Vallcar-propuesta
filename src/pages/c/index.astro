@@ -15,10 +15,10 @@ const manifiesto =
 const palabras = manifiesto.split(" ");
 
 const servicios = [
-  { href: u("/c/taller/"), nombre: "Taller", texto: "Revisión anual, frenos, humedades e ITV. Todas las marcas.", img: fotos.sport455 },
-  { href: u("/c/parking/"), nombre: "Parking", texto: "Cubierto o descubierto, con acceso 24 horas junto a la AP-7.", img: fotos.exposicion },
-  { href: u("/c/tienda/"), nombre: "Tienda", texto: "Miles de accesorios y recambios. Envíos en 24/48 h.", img: fotos.sport480 },
-  { href: u("/c/seguros-y-financiacion/"), nombre: "Seguros y financiación", texto: "Pagar y asegurar tu caravana sin salir de Vallcar.", img: fotos.kids470 },
+  { href: u("/c/taller/"), nombre: "Taller", texto: "Revisión anual, frenos, humedades e ITV. Todas las marcas." },
+  { href: u("/c/parking/"), nombre: "Parking", texto: "Cubierto o descubierto, con acceso 24 horas junto a la AP-7." },
+  { href: u("/c/tienda/"), nombre: "Tienda", texto: "Miles de accesorios y recambios. Envíos en 24/48 h." },
+  { href: u("/c/seguros-y-financiacion/"), nombre: "Seguros y financiación", texto: "Pagar y asegurar tu caravana sin salir de Vallcar." },
 ];
 ---
 <LayoutC titulo="Caravanas Sterckeman en Barcelona" sobreHero>
@@ -145,7 +145,6 @@ const servicios = [
               <span class="fila-nombre">{s.nombre}</span>
               <span class="fila-texto">{s.texto}</span>
               <span class="fila-flecha" aria-hidden="true">→</span>
-              <img class="fila-img" src={foto(s.img, 480, 360)} alt="" loading="lazy" width="480" height="360">
             </a>
           </li>
         ))}
