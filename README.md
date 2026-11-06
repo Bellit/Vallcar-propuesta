@@ -4,7 +4,7 @@ Estudio inicial y tres propuestas de rediseño para [vallcar.com](https://www.va
 
 | Ruta | Contenido |
 |---|---|
-| `/` | Portada con enlace a las dos propuestas |
+| `/` | Portada con enlace a las tres propuestas |
 | `/a/` | Propuesta A, "Km 10.2": identidad de carretera, stock filtrable y panel de servicios |
 | `/b/` | Propuesta B, "Plano de planta": elegir caravana según cuántos dormís, alquiler como puerta de entrada |
 | `/c/` | Propuesta C, "Gran Turismo": landing de producto premium con vídeo en el hero y animaciones ligadas al scroll |
@@ -31,7 +31,7 @@ La web se publica en GitHub Pages, en https://bellit.github.io/Vallcar-propuesta
 
 ## Dónde está cada cosa
 
-- `src/data/vallcar.ts`: stock, modelos de alquiler, horarios y textos de las páginas, compartidos por las dos propuestas. En el proyecto real estos datos vendrán del CMS. Para marcar una caravana como vendida basta con `vendida: true`, y deja de publicarse.
+- `src/data/vallcar.ts`: stock, modelos de alquiler, horarios y textos de las páginas, compartidos por las tres propuestas. En el proyecto real estos datos vendrán del CMS. Para marcar una caravana como vendida basta con `vendida: true`, y deja de publicarse.
 - `src/layouts/` y `src/styles/`: la cabecera, el pie y los estilos de cada propuesta.
 - `src/components/Formulario.astro`: formulario común (contacto, pedir precio y alquiler) con validación. En la maqueta no envía nada: valida y muestra la confirmación.
 - `src/scripts/comun.ts`: horario "abierto ahora", menú móvil, filtros de stock y validación de formularios.
